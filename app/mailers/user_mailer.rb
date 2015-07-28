@@ -17,19 +17,12 @@ class UserMailer < MandrillMailer::TemplateMailer
   end
 
   def application_success(user)
-    puts "EMAIL_LOG: in application_success method"
     user_info = {name: user.name, email:  user.email}
     options = {}
-    puts "EMAIL_LOG: options = #{options}"
-    # if !Rails.env.production?
-    #   options[:port] = 3000
-    # end
+    if !Rails.env.production?
+      options[:port] = 3000
+    end
 
-    accept_link = user_status_url(user, 'accepted', options)
-    puts "EMAIL_LOG: accept_link = #{accept_link}"
-
-    decline_link = user_status_url(user, 'declined', options)
-    puts "EMAIL_LOG: accept_link = #{accept_ldecline_linkink}"
     mandrill_mail(
       template: 'application-successful',
       subject: 'Welcome to Rails Girls!',
@@ -37,8 +30,8 @@ class UserMailer < MandrillMailer::TemplateMailer
       vars: {
         'NAME' => user.name,
         'SUBJECT' => 'Welcome to Rails Girls!',
-        'ACCEPT_LINK' => accept_link
-        'DELCLINE_LINK' => decline_link
+        'ACCEPT_LINK' => user_status_url(user, 'accepted', options),
+        'DELCLINE_LINK' => user_status_url(user, 'declined', options),
       },
       important: true,
       inline_css: true)
