@@ -32,11 +32,11 @@ class UsersController < ApplicationController
 
   def update
     user = User.find params[:id]
-    temp_params = user_params
-    if temp_params[:comments].present?
-      user.comments.create temp_params[:comments]
-      temp_params.delete(:comments)
-    end
+    # temp_params = user_params
+    # if temp_params[:comments].present?
+    #   user.comments.create temp_params[:comments]
+    #   temp_params.delete(:comments)
+    # end
 
     user.assign_attributes(temp_params)
 
