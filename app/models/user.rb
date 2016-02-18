@@ -71,12 +71,17 @@ class User < ActiveRecord::Base
   end
 
   def send_admin_status_email
+    puts "EMAIL_LOG: Trying to send admin email"
+    puts "EMAIL_LOG: admin_status: #{admin_status}"
     case admin_status
     when 'approved'
+      puts "EMAIL_LOG: trying to send approved email"
       UserMailer.application_success(self).deliver
     when 'deferred'
+      puts "EMAIL_LOG: trying to send deferred email"
       UserMailer.application_deferred(self).deliver
     when 'rejected'
+      puts "EMAIL_LOG: trying to send rejected email"
       UserMailer.application_rejected(self).deliver
     end
   end

@@ -48,6 +48,7 @@ class UsersController < ApplicationController
     user.assign_attributes(temp_params)
 
     if user.admin_status_changed?
+      puts "EMAIL_LOG: admin status changed - going to send email"
       user.send_admin_status_email
     end
 
